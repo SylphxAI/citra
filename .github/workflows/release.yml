@@ -11,6 +11,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      build-only:
+        description: Build and check the binaries only; publish nothing.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -21,7 +26,7 @@ concurrency:
 
 jobs:
   release:
-    uses: SylphxAI/mcp-kit/.github/workflows/release.yml@v0
+    uses: SylphxAI/mcp-kit/.github/workflows/release.yml@ci/own-runners
     # packages: write is only used by the kit's optional GHCR image job, which
     # anymd skips; GitHub still checks every called job's permissions.
     permissions:
@@ -29,6 +34,7 @@ jobs:
       id-token: write
       packages: write
     with:
+      build-only: ${{ inputs.build-only == true }}
       name: anymd
       cargo-package: anymd
       # MCP Bundle (.mcpb) for Claude Desktop, attached to the GitHub release.
