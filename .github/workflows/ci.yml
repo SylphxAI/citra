@@ -21,7 +21,7 @@ concurrency:
 jobs:
   plain-language:
     name: Plain language
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -33,13 +33,18 @@ jobs:
 
   validate:
     name: Validate Code Quality
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
       - name: Validate GitHub Actions workflows
         run: bash scripts/check-github-actions.sh
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -64,8 +69,8 @@ jobs:
       - name: Every manifest carries the same version
         run: bun run check:versions
 
-      - name: Public repository runs on GitHub-hosted runners only
-        run: bun run check:no-github-hosted-macos
+      - name: Every job runs on our own runners
+        run: bun run check:runners
 
       - name: Typecheck
         run: bun run typecheck
@@ -110,7 +115,7 @@ jobs:
 
   security-secrets:
     name: security:secrets
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7

@@ -73,9 +73,9 @@ and commercial controls.
 Terminal delivery is **npm package release** (main package + platform optional
 native packages) with registry readback — not a hosted app deploy.
 
-Pull requests run `CI` on GitHub-hosted runners; `Validate Code Quality`,
+Pull requests run `CI` on our own Linux runners; `Validate Code Quality`,
 `security:secrets` and `Plain language` are the required checks. Merging a
-version bump to `main` publishes through `release.yml`: 5 native builds, npm
+version bump to `main` publishes through `release.yml`: 5 native builds cross-compiled on Linux, npm
 with trusted publishing, an `npx` smoke test, the GitHub release and the MCP
 Registry entry.
 

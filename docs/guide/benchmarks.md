@@ -3,7 +3,7 @@
 **AgentDocBench** is an open, reproducible benchmark for "document → Markdown for agents". It measures what an
 agent needs from a converter: the words verbatim, in reading order, tables intact, fast, and in as few tokens as
 possible. It runs anymd, Docling, Marker, MarkItDown, Kreuzberg, Unstructured, and pdftotext on the same
-license-clean documents on GitHub-hosted runners.
+license-clean documents on the same 4-CPU Linux CI runners.
 
 anymd is one of the tools measured, and this benchmark lives in its repository. The scoring does not know which
 tool produced an output, the corpus and ground truth are public, and the categories where anymd loses are in the
@@ -209,7 +209,7 @@ ANYMD_BIN=target/release/anymd .venv/bin/python bench/run.py --tool anymd \
 ```
 
 The [Benchmark workflow](https://github.com/SylphxAI/anymd/actions/workflows/benchmark.yml) runs every tool on its
-own GitHub-hosted runner with the same system packages (poppler, tesseract with Chinese and Japanese, pandoc),
+own 4-CPU Linux runner with the same system packages (poppler, tesseract with Chinese and Japanese, pandoc),
 and publishes the merged results and every Markdown output as an artifact.
 
 ## Submit a tool

@@ -196,7 +196,9 @@ def render(corpus, tools):
         add(f"| [{m['tool']}]({m.get('tool_url', '')}) | `{m.get('tool_version', '')}` | skipped | {m['skipped']} |")
     add("")
     machines = sorted({m["machine"] for m in meta.values()})
-    add(f"Machine: {', '.join(machines)} ({'GitHub-hosted runner' if all(m['runner'] == 'github-hosted' for m in meta.values()) else 'mixed runners'}).")
+    runners = {m["runner"] for m in meta.values()}
+    runner = {"github-hosted": "GitHub-hosted runner", "self-hosted": "Sylphx Linux runner"}.get(runners.pop()) if len(runners) == 1 else None
+    add(f"Machine: {', '.join(machines)} ({runner or 'mixed runners'}).")
     add("pdftotext is the reference extractor for born-digital PDFs (bench/reference/), so its text F1 on those "
         "documents is 100 by construction; it outputs plain text, so it scores 0 on tables and on non-PDF formats.")
     return "\n".join(out) + "\n", summary, order

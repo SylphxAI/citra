@@ -6,7 +6,7 @@ records how long that takes and how many tokens it costs.
 
 Everything here is reproducible: the corpus is pinned by SHA-256, the ground truth is human-checkable JSON,
 every tool runs through a small adapter, and the [Benchmark workflow](../.github/workflows/benchmark.yml)
-reruns it all on GitHub-hosted runners. The leaderboard in
+reruns it all on our own Linux CI runners. The leaderboard in
 [docs/guide/benchmarks.md](../docs/guide/benchmarks.md) is generated from the committed results in
 [`results/`](results/); no number is edited by hand.
 
@@ -120,7 +120,7 @@ meant for the workflow's runners, not a laptop.
 
 The [Benchmark workflow](../.github/workflows/benchmark.yml) runs on every pull request that touches `bench/`
 and on demand (`gh workflow run benchmark.yml -f tools=anymd,docling`). Each tool runs on its own 4-CPU
-GitHub-hosted runner (docling and marker in 4 shards, unstructured in 2) with tesseract (English, Chinese,
+Linux runner of ours (`sylphx-linux-standard`) (docling and marker in 4 shards, unstructured in 2) with tesseract (English, Chinese,
 Japanese), poppler, and pandoc installed for every tool alike. The Leaderboard job's summary shows the table,
 and its `agentdocbench-results` artifact holds the merged results JSON and every Markdown output.
 

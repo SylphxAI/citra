@@ -1,7 +1,7 @@
 name: Benchmark
 
 # AgentDocBench: every tool in bench/adapters/ converts the corpus on a
-# GitHub-hosted runner (one job per tool, heavy tools sharded). Each job
+# 4-CPU Linux runner of ours (one job per tool, heavy tools sharded). Each job
 # uploads its results JSON and Markdown outputs; the report job merges them
 # and prints the leaderboard to the job summary. See bench/README.md.
 on:
@@ -27,7 +27,7 @@ concurrency:
 jobs:
   prepare:
     name: Corpus and anymd
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
@@ -64,7 +64,7 @@ jobs:
   bench:
     name: ${{ matrix.tool }} ${{ matrix.shard }}
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     timeout-minutes: 350
     strategy:
       fail-fast: false
@@ -169,7 +169,7 @@ jobs:
     name: Leaderboard
     needs: bench
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: sylphx-linux-standard
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7

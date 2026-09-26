@@ -141,7 +141,7 @@ def main():
         "timeout": args.timeout,
         "shard": args.shard or "1/1",
         "machine": f"{platform.system()} {platform.machine()}, {os.cpu_count()} CPUs",
-        "runner": "github-hosted" if os.environ.get("GITHUB_ACTIONS") else "local",
+        "runner": os.environ.get("RUNNER_ENVIRONMENT", "local"),
         "run_url": (
             f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
             if os.environ.get("GITHUB_RUN_ID")
